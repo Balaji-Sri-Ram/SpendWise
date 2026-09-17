@@ -1,0 +1,62 @@
+# Environment and Secrets
+.env
+.env.*
+.env.local
+*.env
+token.json
+!/.env.example
+!/frontend/.env.example
+
+# Java / Maven
+target/
+*.class
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+dist-ssr/
+*.local
+
+# Logs
+*.log
+backend-error.txt
+backend-startup.log
+startup-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDE & Editor
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+.apt_generated
+.springBeans
+.sts4-cache
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Temporary / Scratch
+*.tmp
+*.temp
+scratch/
+.neon
+.agents/
+skills-lock.json
