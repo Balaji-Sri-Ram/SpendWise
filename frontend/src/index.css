@@ -131,16 +131,45 @@
 }
 
 /* ── Font Style Configuration ───────────────────────────────────── */
-[data-font-style="modern"] {
-  --font-family-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
 
+/* CLASSIC (default) — all Inter */
 [data-font-style="classic"] {
   --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-sans:    'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* MODERN — Space Grotesk headings + body, IBM Plex Mono for data */
+[data-font-style="modern"] {
+  --font-family-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-sans:    'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Apply to body element directly so inline-styled React components inherit */
+[data-font-style="modern"] body,
+[data-font-style="modern"] body * {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Override monospace elements in Modern mode */
+[data-font-style="modern"] code,
+[data-font-style="modern"] pre,
+[data-font-style="modern"] .font-mono {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Revert for Classic — ensure full reset */
+[data-font-style="classic"] body,
+[data-font-style="classic"] body * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+[data-font-style="classic"] code,
+[data-font-style="classic"] pre,
+[data-font-style="classic"] .font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 
