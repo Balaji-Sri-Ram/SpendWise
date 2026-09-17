@@ -1,0 +1,10 @@
+.git
+.github
+.env
+.env.*
+target
+frontend/node_modules
+frontend/dist
+node_modules
+*.log
+token.json
