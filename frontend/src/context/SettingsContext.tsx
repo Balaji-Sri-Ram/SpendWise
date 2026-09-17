@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { UserSettingsResponse, CurrencyPreference, DateFormatPreference, ThemePreference, UpdateUserSettingsRequest } from '../types';
+import type { UserSettingsResponse, CurrencyPreference, DateFormatPreference, ThemePreference, FontStylePreference, UpdateUserSettingsRequest } from '../types';
 import { settingsService } from '../services/settingsService';
 import { useAuth } from '../hooks/useAuth';
 
@@ -11,6 +11,7 @@ interface SettingsContextType {
   currency: CurrencyPreference;
   dateFormat: DateFormatPreference;
   theme: ThemePreference;
+  fontStyle: FontStylePreference;
   resolvedTheme: 'light' | 'dark' | 'glass';
   refreshSettings: () => Promise<void>;
   updateSettings: (data: UpdateUserSettingsRequest) => Promise<void>;
@@ -67,6 +68,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const currency = settings?.currency || 'INR';
   const dateFormat = settings?.dateFormat || 'DD_MMM_YYYY';
   const theme = settings?.theme || 'LIGHT';
+  const fontStyle = settings?.fontStyle || 'CLASSIC';
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark' | 'glass'>('light');
 
   useEffect(() => {
@@ -97,6 +99,11 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.fontStyle = fontStyle.toLowerCase();
+  }, [fontStyle]);
+
   return (
     <SettingsContext.Provider value={{ 
       settings, 
@@ -105,6 +112,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       currency,
       dateFormat,
       theme,
+      fontStyle,
       resolvedTheme,
       refreshSettings, 
       updateSettings, 

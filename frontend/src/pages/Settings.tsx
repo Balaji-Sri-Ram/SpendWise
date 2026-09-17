@@ -12,8 +12,9 @@ import type {
   CurrencyPreference,
   DateFormatPreference,
   ThemePreference,
+  FontStylePreference,
 } from '../types';
-import { ShieldAlert, Sun, Moon, Monitor } from 'lucide-react';
+import { ShieldAlert, Sun, Moon, Monitor, Type, Baseline } from 'lucide-react';
 
 /* ── Theme option config ────────────────────────────────────────── */
 const THEME_OPTIONS: {
@@ -27,8 +28,18 @@ const THEME_OPTIONS: {
   { value: 'SYSTEM', label: 'System', desc: 'Follow OS',    icon: <Monitor  size={22} /> },
 ];
 
+const FONT_STYLE_OPTIONS: {
+  value: FontStylePreference;
+  label: string;
+  desc:  string;
+  icon:  React.ReactNode;
+}[] = [
+  { value: 'MODERN',  label: 'Modern',  desc: 'Space Grotesk', icon: <Type     size={22} /> },
+  { value: 'CLASSIC', label: 'Classic', desc: 'Inter',         icon: <Baseline size={22} /> },
+];
+
 export const Settings: React.FC = () => {
-  const { settings, isLoading, updateSettings, resetSettings } = useSettings();
+  const { settings, isLoading, error, updateSettings, resetSettings } = useSettings();
   const { showToast } = useToast();
 
   const [formData,         setFormData]         = useState<UpdateUserSettingsRequest | null>(null);
@@ -43,6 +54,7 @@ export const Settings: React.FC = () => {
         currency:              settings.currency,
         dateFormat:            settings.dateFormat,
         theme:                 settings.theme,
+        fontStyle:             settings.fontStyle,
         emailNotifications:    settings.emailNotifications,
         budgetAlerts:          settings.budgetAlerts,
         subscriptionReminders: settings.subscriptionReminders,
@@ -74,12 +86,30 @@ export const Settings: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData?.theme]);
 
-  if (isLoading || !formData) return <SettingsSkeleton />;
+  /* Live preview — apply font style immediately when selector is clicked */
+  useEffect(() => {
+    if (!formData?.fontStyle) return;
+    const root = document.documentElement;
+    root.dataset.fontStyle = formData.fontStyle.toLowerCase();
+    
+    return () => {
+      /* Revert to persisted font style on unmount (if user didn't save) */
+      if (settings?.fontStyle) {
+        root.dataset.fontStyle = settings.fontStyle.toLowerCase();
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData?.fontStyle]);
+
+  if (isLoading) return <SettingsSkeleton />;
+  if (error) return <div style={{ color: 'var(--color-danger)', padding: '2rem', textAlign: 'center' }}>{error}</div>;
+  if (!formData) return <SettingsSkeleton />;
 
   const isDirty =
     formData.currency              !== settings?.currency              ||
     formData.dateFormat            !== settings?.dateFormat            ||
     formData.theme                 !== settings?.theme                 ||
+    formData.fontStyle             !== settings?.fontStyle             ||
     formData.emailNotifications    !== settings?.emailNotifications    ||
     formData.budgetAlerts          !== settings?.budgetAlerts          ||
     formData.subscriptionReminders !== settings?.subscriptionReminders ||
@@ -184,6 +214,95 @@ export const Settings: React.FC = () => {
                       key={option.value}
                       type="button"
                       onClick={() => setFormData({ ...formData, theme: option.value })}
+                      style={{
+                        display:         'flex',
+                        flexDirection:   'column',
+                        alignItems:      'center',
+                        justifyContent:  'center',
+                        gap:             '0.5rem',
+                        padding:         '1.25rem 0.75rem',
+                        border:          `2px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                        borderRadius:    'var(--radius-xl)',
+                        backgroundColor: isSelected ? 'var(--color-surface-muted)' : 'var(--color-surface)',
+                        cursor:          'pointer',
+                        transition:      'all var(--transition-fast)',
+                        position:        'relative',
+                        boxShadow:       isSelected 
+                          ? `0 0 0 1px var(--color-primary), 0 4px 16px rgba(124,58,237,0.15)`
+                          : 'none',
+                      }}
+                      onMouseEnter={e => {
+                        if (!isSelected) {
+                          (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-primary)';
+                          (e.currentTarget as HTMLElement).style.transform   = 'translateY(-1px)';
+                        }
+                      }}
+                      onMouseLeave={e => {
+                        if (!isSelected) {
+                          (e.currentTarget as HTMLElement).style.borderColor = '';
+                          (e.currentTarget as HTMLElement).style.transform   = '';
+                        }
+                      }}
+                    >
+                      {/* Check indicator */}
+                      {isSelected && (
+                        <div
+                          style={{
+                            position:        'absolute',
+                            top:             '0.5rem',
+                            right:           '0.5rem',
+                            width:           '18px',
+                            height:          '18px',
+                            borderRadius:    '50%',
+                            backgroundColor: 'var(--color-primary)',
+                            display:         'flex',
+                            alignItems:      'center',
+                            justifyContent:  'center',
+                            boxShadow:       '0 2px 6px rgba(124,58,237,0.35)',
+                          }}
+                        >
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                            <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                      )}
+
+                      {/* Icon */}
+                      <span
+                        style={{
+                          color: 'var(--color-text-secondary)',
+                          opacity: 0.80,
+                        }}
+                      >
+                        {option.icon}
+                      </span>
+
+                      <span style={{ fontWeight: 'var(--font-weight-semibold)', color: 'var(--color-text-primary)', fontSize: 'var(--font-size-sm)' }}>
+                        {option.label}
+                      </span>
+                      <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)' }}>
+                        {option.desc}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Font Style selector */}
+            <div>
+              <label style={{ display: 'block', marginBottom: '1rem', fontWeight: 'var(--font-weight-medium)', color: 'var(--color-text-primary)', fontSize: 'var(--font-size-sm)' }}>
+                Typography
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.875rem' }}>
+                {FONT_STYLE_OPTIONS.map(option => {
+                  const isSelected = formData.fontStyle === option.value;
+
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, fontStyle: option.value })}
                       style={{
                         display:         'flex',
                         flexDirection:   'column',

@@ -43,6 +43,11 @@ public class UserSettings {
     @Builder.Default
     private ThemePreference theme = ThemePreference.LIGHT;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'CLASSIC'")
+    @Builder.Default
+    private FontStylePreference fontStyle = FontStylePreference.CLASSIC;
+
     @Column(nullable = false)
     @Builder.Default
     private boolean emailNotifications = true;

@@ -3,6 +3,7 @@ package com.spendwise.dto.request;
 import com.spendwise.entity.CurrencyPreference;
 import com.spendwise.entity.DateFormatPreference;
 import com.spendwise.entity.ThemePreference;
+import com.spendwise.entity.FontStylePreference;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,9 @@ public class UpdateUserSettingsRequest {
 
     @NotNull(message = "Theme preference is required")
     private ThemePreference theme;
+
+    @NotNull(message = "Font style preference is required")
+    private FontStylePreference fontStyle;
 
     private boolean emailNotifications;
 

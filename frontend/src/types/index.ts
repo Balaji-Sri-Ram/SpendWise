@@ -145,12 +145,14 @@ export interface UpdateBudgetRequest extends CreateBudgetRequest {}
 export type CurrencyPreference = 'INR' | 'USD' | 'EUR' | 'GBP';
 export type DateFormatPreference = 'DD_MMM_YYYY' | 'DD_MM_YYYY' | 'MM_DD_YYYY' | 'YYYY_MM_DD';
 export type ThemePreference = 'LIGHT' | 'DARK' | 'SYSTEM';
+export type FontStylePreference = 'MODERN' | 'CLASSIC';
 
 export interface UserSettingsResponse {
   id: number;
   currency: CurrencyPreference;
   dateFormat: DateFormatPreference;
   theme: ThemePreference;
+  fontStyle: FontStylePreference;
   emailNotifications: boolean;
   budgetAlerts: boolean;
   subscriptionReminders: boolean;
@@ -164,6 +166,7 @@ export interface UpdateUserSettingsRequest {
   currency: CurrencyPreference;
   dateFormat: DateFormatPreference;
   theme: ThemePreference;
+  fontStyle: FontStylePreference;
   emailNotifications: boolean;
   budgetAlerts: boolean;
   subscriptionReminders: boolean;

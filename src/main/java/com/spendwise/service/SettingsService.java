@@ -37,6 +37,7 @@ public class SettingsService {
         settings.setCurrency(request.getCurrency());
         settings.setDateFormat(request.getDateFormat());
         settings.setTheme(request.getTheme());
+        settings.setFontStyle(request.getFontStyle());
         settings.setEmailNotifications(request.isEmailNotifications());
         settings.setBudgetAlerts(request.isBudgetAlerts());
         settings.setSubscriptionReminders(request.isSubscriptionReminders());
@@ -58,6 +59,7 @@ public class SettingsService {
         settings.setCurrency(com.spendwise.entity.CurrencyPreference.INR);
         settings.setDateFormat(com.spendwise.entity.DateFormatPreference.DD_MMM_YYYY);
         settings.setTheme(com.spendwise.entity.ThemePreference.LIGHT);
+        settings.setFontStyle(com.spendwise.entity.FontStylePreference.CLASSIC);
         settings.setEmailNotifications(true);
         settings.setBudgetAlerts(true);
         settings.setSubscriptionReminders(true);
@@ -74,6 +76,7 @@ public class SettingsService {
                 .currency(com.spendwise.entity.CurrencyPreference.INR)
                 .dateFormat(com.spendwise.entity.DateFormatPreference.DD_MMM_YYYY)
                 .theme(com.spendwise.entity.ThemePreference.LIGHT)
+                .fontStyle(com.spendwise.entity.FontStylePreference.CLASSIC)
                 .emailNotifications(true)
                 .budgetAlerts(true)
                 .subscriptionReminders(true)
@@ -90,6 +93,7 @@ public class SettingsService {
                 .currency(settings.getCurrency())
                 .dateFormat(settings.getDateFormat())
                 .theme(settings.getTheme())
+                .fontStyle(settings.getFontStyle())
                 .emailNotifications(settings.isEmailNotifications())
                 .budgetAlerts(settings.isBudgetAlerts())
                 .subscriptionReminders(settings.isSubscriptionReminders())

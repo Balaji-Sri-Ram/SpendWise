@@ -3,6 +3,7 @@ package com.spendwise.dto.response;
 import com.spendwise.entity.CurrencyPreference;
 import com.spendwise.entity.DateFormatPreference;
 import com.spendwise.entity.ThemePreference;
+import com.spendwise.entity.FontStylePreference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class UserSettingsResponse {
     private CurrencyPreference currency;
     private DateFormatPreference dateFormat;
     private ThemePreference theme;
+    private FontStylePreference fontStyle;
     private boolean emailNotifications;
     private boolean budgetAlerts;
     private boolean subscriptionReminders;

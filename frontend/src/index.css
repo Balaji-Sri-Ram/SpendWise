@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 :root {
   /* Colors */
@@ -35,6 +35,8 @@
 
   /* Typography */
   --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -126,6 +128,19 @@
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
   --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ── Font Style Configuration ───────────────────────────────────── */
+[data-font-style="modern"] {
+  --font-family-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+[data-font-style="classic"] {
+  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 
@@ -341,10 +356,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-family-heading);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
+}
+
+[data-font-style="modern"] h1,
+[data-font-style="modern"] h2,
+[data-font-style="modern"] h3,
+[data-font-style="modern"] h4,
+[data-font-style="modern"] h5,
+[data-font-style="modern"] h6,
+[data-font-style="modern"] .font-heading {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+[data-font-style="modern"] .font-mono,
+[data-font-style="modern"] .stat-value,
+[data-font-style="modern"] .metric-value,
+[data-font-style="modern"] .amount,
+[data-font-style="modern"] .table-amount,
+[data-font-style="modern"] .data-metric,
+[data-font-style="modern"] .data-text,
+[data-font-style="modern"] [data-numeric="true"],
+[data-font-style="modern"] code {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1;
+}
+
+[data-font-style="modern"] .btn {
+  font-weight: 600;
+}
+
+[data-font-style="modern"] .nav-link,
+[data-font-style="modern"] label,
+[data-font-style="modern"] .input-label {
+  font-weight: 500;
 }
 
 a {
