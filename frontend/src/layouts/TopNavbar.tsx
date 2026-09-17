@@ -58,6 +58,7 @@ export function TopNavbar({ onMenuClick }: { onMenuClick: () => void }) {
         currency: settings.currency,
         dateFormat: settings.dateFormat,
         theme: newTheme as any,
+        fontStyle: settings.fontStyle,
         emailNotifications: settings.emailNotifications,
         budgetAlerts: settings.budgetAlerts,
         subscriptionReminders: settings.subscriptionReminders,
